@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { AddcontactComponent } from './addcontact/addcontact.component';
 import { ContactComponent } from './contact/contact.component';
+import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { StatusComponent } from './status/status.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
   {
     path: 'contact',
     component: ContactComponent,
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'add', component: AddcontactComponent },
       { path: 'edit/:id', component: AddcontactComponent },
     ],
+    canActivate: [AuthGuard],
   },
   {
     path: 'access',
@@ -27,7 +29,7 @@ const routes: Routes = [
     loadComponent: () =>
       import('./login/login.component').then((opt) => opt.LoginComponent),
   },
-  {path:"**",component:StatusComponent}
+  { path: '**', component: StatusComponent },
 ];
 
 @NgModule({

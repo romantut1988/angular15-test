@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements DoCheck {
+  constructor(private route: Router) {}
   title = 'hello';
+  isMenuVisible = true;
+  ngDoCheck(): void {
+    const currentroute = this.route.url;
+    if (currentroute == '/login') {
+      this.isMenuVisible = false;
+    } else {
+      this.isMenuVisible = true;
+    }
+  }
 }
